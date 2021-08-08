@@ -36,6 +36,7 @@ public class Signup extends AppCompatActivity {
         phone = findViewById(R.id.phone);
         pass = findViewById(R.id.pass1);
         t1 = findViewById(R.id.textView3);
+
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
