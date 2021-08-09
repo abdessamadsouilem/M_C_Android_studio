@@ -23,6 +23,7 @@ public class bluetooth extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
+        getSupportActionBar().hide(); // hide the title bar
         t1 =findViewById(R.id.bl);
         BluetoothAdapter mBtAdapter = BluetoothAdapter.getDefaultAdapter();
 

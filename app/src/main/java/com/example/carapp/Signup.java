@@ -29,6 +29,7 @@ public class Signup extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        getSupportActionBar().hide(); // hide the title bar
         b1 = findViewById(R.id.up1);
         email = findViewById(R.id.email1);
         name = findViewById(R.id.name);

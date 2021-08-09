@@ -41,6 +41,7 @@ public class Aceuill extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aceuill);
+        getSupportActionBar().hide(); // hide the title bar
         t1 =findViewById(R.id.textView22);
         t1.setText("Welcome "+MainActivity._name);
        b1=findViewById(R.id.button3);
