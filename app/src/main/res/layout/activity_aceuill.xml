@@ -21,13 +21,14 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="143dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.207"
         app:srcCompat="@drawable/_800__converted__ab84b6d4" />
 
     <Button
@@ -35,10 +36,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Test your car"
+        app:backgroundTint="#03A9F4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.945" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="311dp"
+        android:layout_height="71dp"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:text="You need to on bluetooth to sacn your car"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.135" />
 </androidx.constraintlayout.widget.ConstraintLayout>

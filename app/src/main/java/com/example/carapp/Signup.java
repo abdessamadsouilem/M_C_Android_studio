@@ -24,7 +24,7 @@ import java.util.Map;
 public class Signup extends AppCompatActivity {
     Button b1;
     EditText email,pass,name,con,phone;
-    TextView t1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +35,7 @@ public class Signup extends AppCompatActivity {
         con = findViewById(R.id.conpass1);
         phone = findViewById(R.id.phone);
         pass = findViewById(R.id.pass1);
-        t1 = findViewById(R.id.textView3);
+
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +51,7 @@ public class Signup extends AppCompatActivity {
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getJSONObject("user") != null){
-                    t1.setText("nnnnnn");
+
                     Intent switchActivityIntent = new Intent(this, MainActivity.class);
                     startActivity(switchActivityIntent);
                 }
@@ -62,7 +62,7 @@ public class Signup extends AppCompatActivity {
 
         },error -> {
             error.printStackTrace();
-           t1.setText("ddddddd");
+
         }){
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
