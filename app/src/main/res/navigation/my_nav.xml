@@ -10,14 +10,14 @@
         android:name="com.example.carapp.Aceuill"
         android:label="activity_aceuill"
         tools:layout="@layout/activity_aceuill" />
-    <fragment
+    <activity
         android:id="@+id/profile"
         android:name="com.example.carapp.Profile"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
+        android:label="activity_profile"
+        tools:layout="@layout/activity_profile" />
+    <activity
         android:id="@+id/requestm"
         android:name="com.example.carapp.requestm"
-        android:label="fragment_requestm"
-        tools:layout="@layout/fragment_requestm" />
+        android:label="activity_requestm"
+        tools:layout="@layout/activity_requestm" />
 </navigation>

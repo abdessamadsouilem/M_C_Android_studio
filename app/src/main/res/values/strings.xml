@@ -4,4 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="blank_fragment">blank_fragment</string>
     <string name="textview">TextView</string>
+    <string name="request_mechanic_section">Request mechanic section</string>
+    <string name="profile_section">Profile section</string>
 </resources>
