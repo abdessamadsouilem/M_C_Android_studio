@@ -24,6 +24,7 @@ import java.util.Map;
 public class Signup extends AppCompatActivity {
     Button b1;
     EditText email,pass,name,con,phone;
+    TextView L1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +37,19 @@ public class Signup extends AppCompatActivity {
         con = findViewById(R.id.conpass1);
         phone = findViewById(R.id.phone);
         pass = findViewById(R.id.pass1);
+        L1 = findViewById(R.id.login1);
 
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                register();
+            }
+        });
+        L1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login();
             }
         });
     }
@@ -80,5 +88,9 @@ public class Signup extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(getBaseContext());
         queue.add(request);
+    }
+    public void login(){
+        Intent switchActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(switchActivityIntent);
     }
 }
