@@ -109,7 +109,7 @@
                 android:id="@+id/modelC"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                
+
                 android:paddingLeft="9dp"
                 android:text="TextView" />
 
