@@ -31,15 +31,21 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 import static java.security.AccessController.getContext;
 
 public class Profile extends AppCompatActivity {
-   TextView t2;
+   TextView t2,t3,t4,t5,t6,t7,t8;
    ImageView I1;
     public static String _name;
+    public static String _email;
+    public static String _number;
+    public static String _model;
+    public static String _make;
+    public static String _series;
     public static String _picture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        GetC();
+
         super.onCreate(savedInstanceState);
+        GetC();
         setContentView(R.layout.activity_profile);
         getSupportActionBar().hide();
 
@@ -66,6 +72,12 @@ public class Profile extends AppCompatActivity {
                     }
                 });
                 t2 = findViewById(R.id.textView8);
+                t3 = findViewById(R.id.nameC);
+                t4 = findViewById(R.id.emailC);
+                t5 = findViewById(R.id.numberC);
+                t6 = findViewById(R.id.modelC);
+                t7 = findViewById(R.id.makeC);
+                t8 = findViewById(R.id.seriesC);
                 I1 = findViewById(R.id.imageView5);
 
             }
@@ -94,12 +106,23 @@ public class Profile extends AppCompatActivity {
                     JSONArray client = object.getJSONArray("client");
                     JSONObject client1 = client.getJSONObject(0);
                     _name = client1.getString("name");
+                    _email = client1.getString("email");
+                    _number =client1.getString("Numéro");
                     _picture = client1.getString("picture");
+                    _model = client1.getString("model");
+                    _make = client1.getString("make");
+                    _series = client1.getString("séries");
 
                     Picasso.get().load(Constant.URL+"images/"+_picture).resize(250, 250).centerCrop().transform(new RoundedCornersTransformation(1500,10)).into(I1);
 
 
                     t2.setText(_name);
+                    t3.setText("Full Name : "+_name);
+                    t4.setText("Email : "+_email);
+                    t5.setText("Number phone : "+_number );
+                    t6.setText("Car model : "+_model);
+                    t7.setText("Car make : "+_make);
+                    t8.setText("Car séries : "+_series);
 
 
 
