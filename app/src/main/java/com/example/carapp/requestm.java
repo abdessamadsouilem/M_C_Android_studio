@@ -26,7 +26,7 @@ public class requestm extends AppCompatActivity {
                     case R.id.requestm:
 
                         return true;
-                    case R.id.profile:
+                    case R.id.profileIm:
                         startActivity(new Intent(getApplicationContext(),Profile.class));
                         overridePendingTransition(0,0);
                         return true;

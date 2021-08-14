@@ -11,7 +11,7 @@
         android:label="activity_aceuill"
         tools:layout="@layout/activity_aceuill" />
     <activity
-        android:id="@+id/profile"
+        android:id="@+id/profileIm"
         android:name="com.example.carapp.Profile"
         android:label="activity_profile"
         tools:layout="@layout/activity_profile" />

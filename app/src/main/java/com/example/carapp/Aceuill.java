@@ -2,27 +2,17 @@ package com.example.carapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuView;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.internal.NavigationMenu;
 
 import static androidx.navigation.Navigation.findNavController;
 
@@ -77,7 +67,7 @@ public class Aceuill extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(),requestm.class));
                     overridePendingTransition(0,0);
                     return true;
-                case R.id.profile:
+                case R.id.profileIm:
                     startActivity(new Intent(getApplicationContext(),Profile.class));
                     overridePendingTransition(0,0);
                     return true;

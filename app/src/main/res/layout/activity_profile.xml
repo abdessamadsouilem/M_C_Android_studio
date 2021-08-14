@@ -19,31 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_menu" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center"
-        app:cardBackgroundColor="@color/black"
-        app:cardCornerRadius="150dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.068"
-        tools:ignore="MissingConstraints">
-
-        <ImageView
-            android:id="@+id/profile"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center"
-            >
-
-        </ImageView>
-    </androidx.cardview.widget.CardView>
-
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
@@ -60,14 +35,14 @@
     <androidx.cardview.widget.CardView
         android:layout_width="339dp"
         android:layout_height="321dp"
+        android:layout_gravity="center"
         android:background="#F5F5F5"
         app:cardCornerRadius="30dp"
-        android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.729" >
+        app:layout_constraintVertical_bias="0.729">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -116,6 +91,17 @@
                 android:text="TextView" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/textView8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

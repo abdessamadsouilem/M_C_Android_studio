@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -14,6 +15,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,15 +26,20 @@ import java.util.Map;
 
 public class Profile extends AppCompatActivity {
    TextView t2;
-    public static String _model;
+   ImageView I1;
+    public static String _name;
+    public static String _picture;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        GetC();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         getSupportActionBar().hide();
 
+
                 BottomNavigationView bottomNavigationView = findViewById(R.id.BottomNavigationView);
-                bottomNavigationView.setSelectedItemId(R.id.profile);
+                bottomNavigationView.setSelectedItemId(R.id.profileIm);
                 bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -41,7 +48,7 @@ public class Profile extends AppCompatActivity {
                                 startActivity(new Intent(getApplicationContext(),requestm.class));
                                 overridePendingTransition(0,0);
                                 return true;
-                            case R.id.profile:
+                            case R.id.profileIm:
                                 GetC();
                                 return true;
                             case R.id.aceuill:
@@ -53,7 +60,8 @@ public class Profile extends AppCompatActivity {
                     }
                 });
                 t2 = findViewById(R.id.textView8);
-                GetC();
+                I1 = findViewById(R.id.imageView5);
+
             }
 
             public void ToReq()
@@ -79,9 +87,13 @@ public class Profile extends AppCompatActivity {
                 if (object.getJSONArray("client") != null){
                     JSONArray client = object.getJSONArray("client");
                     JSONObject client1 = client.getJSONObject(0);
-                    _model = client1.getString("name");
+                    _name = client1.getString("name");
+                    _picture = client1.getString("picture");
+                    Picasso.get().load(Constant.URL+"images/"+_picture).into(I1);
 
-                    t2.setText(_model);
+
+                    t2.setText(_name);
+
 
 
                 }
