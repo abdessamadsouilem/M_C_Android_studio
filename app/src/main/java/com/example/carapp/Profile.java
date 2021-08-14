@@ -14,8 +14,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +25,10 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
+import static java.security.AccessController.getContext;
 
 public class Profile extends AppCompatActivity {
    TextView t2;
@@ -89,7 +95,8 @@ public class Profile extends AppCompatActivity {
                     JSONObject client1 = client.getJSONObject(0);
                     _name = client1.getString("name");
                     _picture = client1.getString("picture");
-                    Picasso.get().load(Constant.URL+"images/"+_picture).into(I1);
+
+                    Picasso.get().load(Constant.URL+"images/"+_picture).resize(250, 250).centerCrop().transform(new RoundedCornersTransformation(1500,10)).into(I1);
 
 
                     t2.setText(_name);
