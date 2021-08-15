@@ -6,5 +6,5 @@ public class Constant {
     public static final String LOGIN = HOME+"/login";
     public static final String REGISTER = HOME+"/register";
     public static final  String GetC = HOME+"/getCl";
-    public static final String Mecha = HOME+"/getM";
+    public static final String Mecha = HOME+"/getMA";
 }

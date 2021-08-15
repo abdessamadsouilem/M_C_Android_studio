@@ -59,7 +59,7 @@ public class requestm extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GetM();
+
         setContentView(R.layout.activity_requestm);
         //getSupportActionBar().hide();
 
@@ -113,7 +113,7 @@ public class requestm extends FragmentActivity {
 
                         currentLat = location.getLatitude();
                         currentLong = location.getLongitude();
-
+                        GetM(currentLat,currentLong);
                         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
                             @Override
                             public void onMapReady(GoogleMap googleMap) {
@@ -134,7 +134,7 @@ public class requestm extends FragmentActivity {
 
    }
 
-    private  void GetM()
+    private  void GetM(double lat, double lng)
     {
         StringRequest request = new StringRequest(Request.Method.GET, Constant.Mecha, response -> {
             try {
@@ -158,15 +158,19 @@ public class requestm extends FragmentActivity {
                                 map = googleMap;
                                 MarkerOptions marker = new MarkerOptions();
                                 try {
+                                    Toast.makeText(getApplicationContext(),String.valueOf(lat),Toast.LENGTH_SHORT).show();
                                     marker.position(new LatLng(client1.getDouble("lat"), client1.getDouble("lng")));
-                                    marker.title(client1.getString("address"));
+                                    marker.title(String.valueOf(gg(lng,lat,client1.getDouble("lng"),client1.getDouble("lat"))));
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
+
                                 map.addMarker(marker).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                             }
                         });
                     }
+
 
 
 
@@ -220,6 +224,35 @@ public class requestm extends FragmentActivity {
     {
         Intent switchActivityIntent = new Intent(this, Aceuill.class);
         startActivity(switchActivityIntent);
+    }
+
+    public double gg(double lngC,double latC,double lngM,double latM)
+    {
+    /*    var lon1 = Math.PI * this.lngC/180,
+                lat1 = Math.PI * this.latC/180,
+                lon2 = Math.PI * response.data[i].lng/180,
+                lat2 = Math.PI * response.data[i].lat/180;
+
+        var deltaLat = (lat2 - lat1);
+        var deltaLon =(lon2 - lon1);
+
+        var a = Math.pow(Math.sin(deltaLat/2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(deltaLon/2), 2);
+        var c = 2 * Math.asin(Math.sqrt(a));
+        var EARTH_RADIUS = 6371;
+        var res =c * EARTH_RADIUS;
+
+     */
+        double lngC1 = Math.PI *lngC/180;
+        double latC1 = Math.PI *latC/180;
+        double lngM1 = Math.PI *lngM/180;
+        double latM1 = Math.PI *latM/180;
+        double deltaLat = (latM1 - latC1);
+        double deltaLon =(lngM1 - lngC1);
+        double a = Math.pow(Math.sin(deltaLat/2), 2) + Math.cos(latC1) * Math.cos(latM1) * Math.pow(Math.sin(deltaLon/2), 2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        double EARTH_RADIUS = 6371;
+        return c * EARTH_RADIUS;
+
     }
 
 }
