@@ -51,6 +51,8 @@ public class requestm extends FragmentActivity {
     public static String _name;
     public static double _lat;
     public static double _lng;
+    public int j;
+
     FusedLocationProviderClient fusedLocationProviderClient;
     SupportMapFragment supportMapFragment;
     GoogleMap map;
@@ -59,7 +61,7 @@ public class requestm extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+         j=0;
         setContentView(R.layout.activity_requestm);
         //getSupportActionBar().hide();
 
@@ -91,6 +93,9 @@ public class requestm extends FragmentActivity {
         if (ActivityCompat.checkSelfPermission(requestm.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             getCurrentLocation();
 
+        }
+        else {
+            ActivityCompat.requestPermissions(requestm.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},44);
         }
 
 
@@ -136,12 +141,15 @@ public class requestm extends FragmentActivity {
 
     private  void GetM(double lat, double lng)
     {
+
         StringRequest request = new StringRequest(Request.Method.GET, Constant.Mecha, response -> {
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getJSONArray("mechanic") != null){
                     JSONArray client = object.getJSONArray("mechanic");
                     int i;
+
+
 
                     for (i=0; i<client.length(); i++) {
                         JSONObject client1 = client.getJSONObject(i);
@@ -157,16 +165,24 @@ public class requestm extends FragmentActivity {
 
                                 map = googleMap;
                                 MarkerOptions marker = new MarkerOptions();
+
                                 try {
-                                    Toast.makeText(getApplicationContext(),String.valueOf(lat),Toast.LENGTH_SHORT).show();
+
                                     marker.position(new LatLng(client1.getDouble("lat"), client1.getDouble("lng")));
                                     marker.title(String.valueOf(gg(lng,lat,client1.getDouble("lng"),client1.getDouble("lat"))));
+
+                                    if(gg(lng,lat,client1.getDouble("lng"),client1.getDouble("lat"))<50 && j <5){
+                                        map.addMarker(marker).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                                        j++;
+                                        Toast.makeText(getApplicationContext(),String.valueOf(j),Toast.LENGTH_SHORT).show();
+                                    }
+
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
 
-                                map.addMarker(marker).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+
                             }
                         });
                     }
