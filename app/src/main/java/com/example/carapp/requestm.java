@@ -196,7 +196,7 @@ public class requestm extends FragmentActivity {
                                 try {
 
                                     marker.position(new LatLng(client1.getDouble("lat"), client1.getDouble("lng")));
-                                    marker.title(String.valueOf(gg(lng,lat,client1.getDouble("lng"),client1.getDouble("lat"))));
+                                    marker.title(String.valueOf(client1.getString("name"))+"\n"+String.valueOf(gg(lng,lat,client1.getDouble("lng"),client1.getDouble("lat"))).substring(0,4)+" Km");
 
                                     if(gg(lng,lat,client1.getDouble("lng"),client1.getDouble("lat"))<50 && j <5){
                                         map.addMarker(marker).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));

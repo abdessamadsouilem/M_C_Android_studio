@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,6 +35,7 @@ import static java.security.AccessController.getContext;
 public class Profile extends AppCompatActivity {
    TextView t2,t3,t4,t5,t6,t7,t8;
    ImageView I1;
+   Button log;
     public static String _name;
     public static String _email;
     public static String _number;
@@ -79,9 +82,22 @@ public class Profile extends AppCompatActivity {
                 t7 = findViewById(R.id.makeC);
                 t8 = findViewById(R.id.seriesC);
                 I1 = findViewById(R.id.imageView5);
+                log = findViewById(R.id.buttonL);
+                log.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ToM();
+
+                    }
+                });
 
             }
-
+    public void ToM()
+    {
+        MainActivity.IsLogin = false;
+        Intent switchActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(switchActivityIntent);
+    }
             public void ToReq()
             {
                 Intent switchActivityIntent = new Intent(this, requestm.class);

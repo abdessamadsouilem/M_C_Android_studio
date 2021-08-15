@@ -45,8 +45,18 @@ public class MainActivity extends AppCompatActivity {
     public static String _token;
     public static boolean  IsLogin = false;
 
-
-
+    public void ff()
+    {
+        Intent switchActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(switchActivityIntent);
+    }
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(MainActivity.IsLogin==false)
+        {
+            ff();
+        }
+    }
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
