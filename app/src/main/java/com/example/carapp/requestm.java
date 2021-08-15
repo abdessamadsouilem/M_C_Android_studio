@@ -1,14 +1,18 @@
 package com.example.carapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.MenuItem;
@@ -72,7 +76,7 @@ public class requestm extends FragmentActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.requestm:
-
+                        startActivity(new Intent(getApplicationContext(), requestm.class));
                         return true;
                     case R.id.profileIm:
                         startActivity(new Intent(getApplicationContext(), Profile.class));
@@ -90,15 +94,38 @@ public class requestm extends FragmentActivity {
         SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
         // check permission
-        if (ActivityCompat.checkSelfPermission(requestm.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        statusCheck();
+
+
+    }
+    public void statusCheck() {
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+
+        }else{
             getCurrentLocation();
-
         }
-        else {
-            ActivityCompat.requestPermissions(requestm.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},44);
-        }
+    }
 
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
 
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
 
@@ -174,7 +201,7 @@ public class requestm extends FragmentActivity {
                                     if(gg(lng,lat,client1.getDouble("lng"),client1.getDouble("lat"))<50 && j <5){
                                         map.addMarker(marker).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                                         j++;
-                                        Toast.makeText(getApplicationContext(),String.valueOf(j),Toast.LENGTH_SHORT).show();
+
                                     }
 
 
