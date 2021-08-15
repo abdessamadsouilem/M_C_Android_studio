@@ -14,6 +14,11 @@ import android.view.ActionMode;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -21,17 +26,31 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
 
 public class requestm extends FragmentActivity {
     MapView mapView;
+    public static String _name;
+    public static double _lat;
+    public static double _lng;
     FusedLocationProviderClient fusedLocationProviderClient;
     SupportMapFragment supportMapFragment;
     GoogleMap map;
@@ -40,6 +59,7 @@ public class requestm extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        GetM();
         setContentView(R.layout.activity_requestm);
         //getSupportActionBar().hide();
 
@@ -71,8 +91,6 @@ public class requestm extends FragmentActivity {
         if (ActivityCompat.checkSelfPermission(requestm.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             getCurrentLocation();
 
-        } else {
-            ActivityCompat.requestPermissions(requestm.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
 
 
@@ -82,50 +100,111 @@ public class requestm extends FragmentActivity {
     public void getCurrentLocation() {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+            Toast.makeText(getApplicationContext(),"Bluetooth Turned OFF",Toast.LENGTH_SHORT).show();
+        }else{
+            SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            Task<Location> task = fusedLocationProviderClient.getLastLocation();
+
+            task.addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+
+                    if(location != null) {
+
+                        currentLat = location.getLatitude();
+                        currentLong = location.getLongitude();
+
+                        supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+                            @Override
+                            public void onMapReady(GoogleMap googleMap) {
+                                map = googleMap;
+                                map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLat, currentLong), 10));
+                                MarkerOptions marker = new MarkerOptions();
+                                marker.position(new LatLng(currentLat, currentLong));
+                                marker.title("my position");
+                                map.addMarker(marker);
+                            }
+                        });
+
+                    }
+
+                }
+            });
         }
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
 
-       task.addOnSuccessListener(new OnSuccessListener<Location>() {
-           @Override
-           public void onSuccess(Location location) {
-               if(location != null){
-                   currentLat = location.getLatitude();
-                   currentLong = location.getLongitude();
-                   supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-                       @Override
-                       public void onMapReady(GoogleMap googleMap) {
-                           map = googleMap;
-                           map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLat,currentLong),20));
-                           MarkerOptions marker = new MarkerOptions();
-                           marker.position(new LatLng(currentLat,currentLong));
-                           marker.title("my position");
-                           map.addMarker(marker);
-                       }
-                   });
-
-               }
-
-           }
-       });
    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 44) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getCurrentLocation();
+    private  void GetM()
+    {
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.Mecha, response -> {
+            try {
+                JSONObject object = new JSONObject(response);
+                if (object.getJSONArray("mechanic") != null){
+                    JSONArray client = object.getJSONArray("mechanic");
+                    int i;
+
+                    for (i=0; i<client.length(); i++) {
+                        JSONObject client1 = client.getJSONObject(i);
+                        _name = client1.getString("name");
+                        _lat = client1.getDouble("lat");
+                        _lng = client1.getDouble("lng");
+
+                        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+
+                        supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+                            @Override
+                            public void onMapReady(GoogleMap googleMap) {
+
+                                map = googleMap;
+                                MarkerOptions marker = new MarkerOptions();
+                                try {
+                                    marker.position(new LatLng(client1.getDouble("lat"), client1.getDouble("lng")));
+                                    marker.title(client1.getString("address"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                map.addMarker(marker).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                            }
+                        });
+                    }
+
+
+
+
+
+
+
+
+
+
+
+                }
+            }catch (JSONException e){
+                e.printStackTrace();
+
             }
-        }
+
+        },error -> {
+            error.printStackTrace();
+
+
+        }){
+            @Override
+            public Map<String,String> getHeaders() throws AuthFailureError {
+                String token = MainActivity._token;
+                HashMap<String,String> map = new HashMap<>();
+                map.put("Authorization","Bearer "+token);
+                return map;
+            }
+
+
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(getBaseContext());
+        queue.add(request);
     }
+
+
 
     public void ToReq()
     {
