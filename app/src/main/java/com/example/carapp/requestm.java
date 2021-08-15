@@ -150,7 +150,7 @@ public class requestm extends FragmentActivity {
                             @Override
                             public void onMapReady(GoogleMap googleMap) {
                                 map = googleMap;
-                                map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLat, currentLong), 10));
+                                map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLat, currentLong), 15));
                                 MarkerOptions marker = new MarkerOptions();
                                 marker.position(new LatLng(currentLat, currentLong));
                                 marker.title("my position");
@@ -196,8 +196,8 @@ public class requestm extends FragmentActivity {
                                 try {
 
                                     marker.position(new LatLng(client1.getDouble("lat"), client1.getDouble("lng")));
-                                    marker.title(String.valueOf(client1.getString("name"))+"\n"+String.valueOf(gg(lng,lat,client1.getDouble("lng"),client1.getDouble("lat"))).substring(0,4)+" Km");
-
+                                    marker.title(String.valueOf(client1.getString("name")));
+                                    marker.snippet(String.valueOf(gg(lng,lat,client1.getDouble("lng"),client1.getDouble("lat"))).substring(0,4)+" Km");
                                     if(gg(lng,lat,client1.getDouble("lng"),client1.getDouble("lat"))<50 && j <5){
                                         map.addMarker(marker).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                                         j++;
